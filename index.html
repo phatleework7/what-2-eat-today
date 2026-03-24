@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍜 What to Eat Today - Food Diary</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #667eea;
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+        
+        .form-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border: 2px solid #e9ecef;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #495057;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+        
+        .meal-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 8px;
+        }
+        
+        button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .food-list {
+            margin-top: 30px;
+        }
+        
+        .food-item {
+            background: white;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        
+        .food-item:hover {
+            transform: translateX(5px);
+        }
+        
+        .food-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .food-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #2d3436;
+        }
+        
+        .food-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 8px;
+            color: #636e72;
+            font-size: 0.9rem;
+        }
+        
+        .meta-item {
+            background: #f1f2f6;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+        
+        .category-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .category-món-ngon { background: #d4edda; color: #155724; }
+        .category-thử-vị-mới { background: #fff3cd; color: #856404; }
+        .category-đặc-biệt { background: #f8d7da; color: #721c24; }
+        
+        .food-image {
+            margin-top: 10px;
+            border-radius: 10px;
+            max-width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+        }
+        
+        .delete-btn {
+            background: #dc3545;
+            width: auto;
+            padding: 8px 15px;
+            font-size: 0.9rem;
+            position: relative;
+            top: -25px;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #6c757d;
+        }
+        
+        @media (max-width: 600px) {
+            h1 { font-size: 1.5rem; }
+            .food-header { flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🍜 What to Eat Today</h1>
+        
+        <!-- Form thêm món ăn -->
+        <div class="form-section">
+            <h2 style="margin-bottom: 20px; color: #495057;">➕ Thêm Món Ăn Mới</h2>
+            
+            <form id="foodForm">
+                <div class="form-group">
+                    <label for="date">📅 Ngày:</label>
+                    <input type="date" id="date" name="date" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="meal_time">⏰ Bữa ăn:</label>
+                    <select name="meal_time" id="meal_time" required>
+                        <option value="" disabled selected>-- Chọn bữa --</option>
+                        <option value="sáng">🌅 Sáng</option>
+                        <option value="trưa">☀️ Trưa</option>
+                        <option value="chiều">🌤️ Chiều</option>
+                        <option value="tối">🌙 Tối</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="food_name">🍽️ Tên món ăn:</label>
+                    <input type="text" name="food_name" id="food_name" placeholder="Ví dụ: Phở bò Huế 🍜" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="category">⭐ Phân loại:</label>
+                    <select name="category" id="category" required>
+                        <option value="" disabled selected>-- Chọn phân loại --</option>
+                        <option value="Món ngon">🌟 Món ngon</option>
+                        <option value="Thử vị mới">✨ Thử vị mới</option>
+                        <option value="Đặc biệt">💫 Đặc biệt</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="location">📍 Địa điểm (tuỳ chọn):</label>
+                    <input type="text" name="location" id="location" placeholder="Ví dụ: Hà Nội - Phở Hương Giang">
+                </div>
+                
+                <div class="form-group">
+                    <label for="rating">💯 Điểm đánh giá (1-5):</label>
+                    <select name="rating" id="rating" required>
+                        <option value="5">⭐⭐⭐⭐⭐</option>
+                        <option value="4">⭐⭐⭐⭐</option>
+                        <option value="3">⭐⭐⭐</option>
+                        <option value="2">⭐⭐</option>
+                        <option value="1">⭐</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="image_url">🖼️ Link ảnh (tuỳ chọn - paste link):</label>
+                    <input type="url" name="image_url" id="image_url" placeholder="https://example.com/image.jpg">
+                </div>
+                
+                <button type="submit">💾 Lưu Món Ăn</button>
+            </form>
+        </div>
+        
+        <!-- Danh sách món ăn -->
+        <div class="food-list" id="foodList">
+            <p style="text-align: center; color: #6c757d;">Loading...</p>
+        </div>
+    </div>
+    
+    <!-- Firebase SDKs -->
+    <script type="module" src="app.js"></script>
+</body>
+</html>
