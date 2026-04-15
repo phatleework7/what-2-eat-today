@@ -42,3 +42,5 @@ http://localhost:8000
 - `firebase-config.js` is not used by `index.html`
 - Styles are still inline in `index.html`
 - There are no tests yet
+
+//gud build
