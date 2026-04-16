@@ -1,4 +1,4 @@
-# What to Eat Today
+h# What to Eat Today
 
 A small static food diary app that saves meals to Firebase Firestore.
 
