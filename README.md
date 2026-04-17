@@ -1,5 +1,9 @@
 2h# What to Eat Today
 
+backup.buildUp
+
+console.log("Add back up")
+
 A small static food diary app that saves meals to Firebase Firestore.
 
 ## Project Structure
