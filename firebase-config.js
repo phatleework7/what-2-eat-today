@@ -8,7 +8,7 @@ import { getAnalytics } from "firebase/analytics";
 // If i can i think can be don't hardcode 
 // Your web app's Firebase configuration
 // Can upgrade a possible -- moving level up 
-// Right now i don't completed the project all thing for my love
+// 2Right now i don't completed the project all thing for my love
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyB0RFvbg0QWdBTmxnDQhdr7xdNuCm4hPyk",
