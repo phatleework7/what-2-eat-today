@@ -1,3 +1,5 @@
+//day thu bao nhieu t khong nho cu vao r ra
+
 //check the quality contruction on behavior 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
