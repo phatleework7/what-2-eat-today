@@ -1,3 +1,5 @@
+// mtft i wwant to improve my attitude when i make a mistake, i will trying don't debate with who are show for me my mistake 
+// level day by day 
 //qday thu bao nhieu t khong nho cu vao r ra
 // i need sleep
 //check the quality contruction on behavior 
